@@ -3,8 +3,8 @@ import { chinaLeads, bestEu, pct, data } from "../lib/data";
 
 const { leads, of } = chinaLeads();
 const eu = bestEu();
-const topLine = `China comes first in ${leads} of the ${of} we have figures for.`;
-const euLine = `The EU's biggest share of any of them is ${pct(eu.share)}, in ${eu.m.name.toLowerCase()}.`;
+const topLine = `In ${data.year}, China came first in ${leads} of the ${of} we have figures for.`;
+const euLine = `In ${data.year}, the EU's biggest share of any of them was ${pct(eu.share)}, in ${eu.m.name.toLowerCase()}.`;
 ---
 
 <section class="mb-6">

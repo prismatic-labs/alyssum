@@ -321,7 +321,10 @@
             "table": "World Refinery Production"
           }
         }
-      ]
+      ],
+      "gap": {
+        "mined": "USGS counts bismuth only once refined. It is rarely mined for itself: most comes out of lead and tungsten ore."
+      }
     },
     {
       "id": "boron",
@@ -474,7 +477,6 @@
             ]
           ],
           "other": 6200,
-          "note": "USGS has no country table for refined cobalt.",
           "source": {
             "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cobalt.pdf",
             "table": "World Mine Production"
@@ -949,7 +951,10 @@
             "table": "World Primary Production"
           }
         }
-      ]
+      ],
+      "gap": {
+        "mined": "USGS counts magnesium from the metal onwards. The dolomite and brine it is made from are not broken down by country."
+      }
     },
     {
       "id": "manganese",
@@ -1404,7 +1409,10 @@
             "table": "World Production, silicon metal"
           }
         }
-      ]
+      ],
+      "gap": {
+        "mined": "USGS counts silicon from the metal onwards. Mining of quartzite, its raw rock, is not broken down by country."
+      }
     },
     {
       "id": "titanium",
@@ -1423,6 +1431,72 @@
         "note": null
       },
       "rows": [
+        {
+          "stage": "mined",
+          "what": "Ilmenite and rutile",
+          "unit": "kt",
+          "world": 9400,
+          "producers": [
+            [
+              "US",
+              100
+            ],
+            [
+              "AU",
+              600
+            ],
+            [
+              "CA",
+              350
+            ],
+            [
+              "CN",
+              3300
+            ],
+            [
+              "IN",
+              222
+            ],
+            [
+              "KE",
+              40
+            ],
+            [
+              "MG",
+              240
+            ],
+            [
+              "MZ",
+              1908
+            ],
+            [
+              "NO",
+              360
+            ],
+            [
+              "SN",
+              300
+            ],
+            [
+              "SL",
+              60
+            ],
+            [
+              "ZA",
+              1400
+            ],
+            [
+              "UA",
+              130
+            ]
+          ],
+          "other": 350,
+          "note": "Weight of ore concentrate. Demand comes mainly from white pigment for paint, paper and plastics, not metal.",
+          "source": {
+            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-titanium-minerals.pdf",
+            "table": "World Mine Production (ilmenite and rutile)"
+          }
+        },
         {
           "stage": "refined",
           "what": "Titanium sponge",

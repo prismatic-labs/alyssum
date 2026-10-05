@@ -18,11 +18,13 @@ const DEFAULT_LABEL: Record<string, string> = { mined: "Dug up", refined: "Refin
 interface Step {
   label: string;
   row?: Row;
+  gap?: string;
 }
 const steps: Step[] = m.rows.map((row) => ({ label: row.label ?? DEFAULT_LABEL[row.stage], row }));
 if (!m.blank) {
-  if (!m.rows.some((r) => r.stage === "mined" || r.stage === "source")) steps.unshift({ label: "Dug up" });
-  if (!m.rows.some((r) => r.stage === "refined")) steps.push({ label: "Refined" });
+  if (!m.rows.some((r) => r.stage === "mined" || r.stage === "source")) steps.unshift({ label: "Dug up", gap: m.gap?.mined });
+  if (!m.rows.some((r) => r.stage === "refined"))
+    steps.push({ label: "Refined", gap: `USGS publishes country figures for ${m.name.toLowerCase()} at the mine only, not once refined.` });
 }
 
 const hosts = m.origin.hosts.map((id) => material(id)!).filter(Boolean);
@@ -125,7 +127,7 @@ const cols = steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
           return (
             <section>
               <h3 class="step-label">{s.label}</h3>
-              <Bar row={row} empty="USGS publishes no country figures for this step" />
+              <Bar row={row} empty="No figures by country" />
               {row && (
                 <p class="m-0 mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.9em]">
                   {keyLine(row).map((k) => (
@@ -139,7 +141,8 @@ const cols = steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
               <p class="m-0 mt-0.5 min-h-[1.2em] text-[0.8em] text-[var(--muted)]">
                 {row?.what}
                 {row?.note && <> · {row.note}</>}
-                {hidden.length > 0 && <> · Withheld: {hidden.join(", ")}</>}
+                {hidden.length > 0 && <> · {hidden.join(", ")} not shown: USGS keeps the figure confidential to protect company data.</>}
+                {s.gap}
               </p>
               {row ? <WorldMap row={row} width={mapWidth} labels sharedLand /> : <div class="map-empty" />}
             </section>

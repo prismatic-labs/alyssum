@@ -51,6 +51,8 @@ export interface Material {
   origin: Origin;
   rows: Row[];
   blank?: string;
+  /** Why a step has no country figures, when it isn't simply that USGS stops at the mine. */
+  gap?: { mined?: string };
   reported?: Reported;
   source?: Source;
 }

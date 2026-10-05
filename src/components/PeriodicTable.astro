@@ -22,9 +22,8 @@ function noun(m: Material): string {
   return NOUN[m.id] ?? m.name.toLowerCase();
 }
 
-function verb(m: Material, plural = false): string {
-  const refined = headlineRow(m)?.stage === "refined";
-  return refined ? (plural ? "produce" : "produces") : plural ? "mine" : "mines";
+function verb(m: Material): string {
+  return headlineRow(m)?.stage === "refined" ? "produced" : "mined";
 }
 
 function sayBlank(m: Material): string {
@@ -38,16 +37,16 @@ function sayTop(m: Material): string {
   if (!row) return sayBlank(m);
   const t = top(row);
   const origin = m.origin.note ? ` ${m.origin.note}` : "";
-  return `${t.name} ${verb(m)} ${pct(t.share)} of the world's ${noun(m)}.${origin}`;
+  return `In ${data.year}, ${t.name} ${verb(m)} ${pct(t.share)} of the world's ${noun(m)}.${origin}`;
 }
 
 function sayEu(m: Material): string {
   const row = headlineRow(m);
   if (!row) return sayBlank(m);
   const eu = euShares(row);
-  if (eu.length === 0) return `No EU country is among the producers USGS lists for ${noun(m)}.`;
+  if (eu.length === 0) return `No EU country is among the producers USGS lists for ${noun(m)} in ${data.year}.`;
   const share = pct(euShare(row)).replace("<1%", "less than 1%");
-  return `EU countries ${verb(m, true)} ${share} of the world's ${noun(m)} (${eu.map((s) => s.name).join(", ")}).`;
+  return `In ${data.year}, EU countries ${verb(m)} ${share} of the world's ${noun(m)} (${eu.map((s) => s.name).join(", ")}).`;
 }
 
 const STEP = 44;

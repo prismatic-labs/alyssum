@@ -50,6 +50,12 @@ describe("materials.json", () => {
     expect(named.filter((x) => !GLOSSARY[x])).toEqual([]);
   });
 
+  it("explains every missing mining step", () => {
+    for (const m of data.materials.filter((x) => !x.blank && !x.rows.some((r) => r.stage !== "refined"))) {
+      expect(m.gap?.mined, m.id).toBeTruthy();
+    }
+  });
+
   it("gives every material either figures or a reason for the blank", () => {
     for (const m of data.materials) expect(Boolean(headlineRow(m)) || Boolean(m.blank), m.id).toBe(true);
   });
