@@ -1,0 +1,73 @@
+---
+import type { Row } from "../lib/data";
+import { shares, rest, pct, colours } from "../lib/data";
+
+interface Props {
+  row?: Row;
+  empty?: string;
+}
+
+const { row, empty = "No figures" } = Astro.props;
+const segs = row ? shares(row) : [];
+const palette = row ? colours(row) : new Map<string, string>();
+const remainder = row ? rest(row) : 0;
+const total = segs.reduce((s, x) => s + x.share, 0) + remainder;
+const segments = segs.map((s) => {
+  const width = (s.share / total) * 100;
+  const label = width >= 17 ? `${s.name} ${pct(s.share)}` : width >= 7 ? pct(s.share) : "";
+  return { ...s, colour: palette.get(s.code)!, width, label };
+});
+---
+
+{
+  row ? (
+    <div class="bar" role="img" aria-label={segments.slice(0, 3).map((s) => `${s.name} ${pct(s.share)}`).join(", ")}>
+      {segments.map((s) => (
+        <span class:list={["seg", s.label && "seg-labelled"]} style={`width:${s.width}%;background:${s.colour}`} title={`${s.name} ${pct(s.share)}`}>
+          {s.label}
+        </span>
+      ))}
+      {remainder > 0 && <span class="seg bg-rest" style={`width:${(remainder / total) * 100}%`} title={`Others ${pct(remainder)}`} />}
+    </div>
+  ) : (
+    <div class="bar bar-empty">{empty}</div>
+  )
+}
+
+<style>
+  .bar {
+    position: relative;
+    display: flex;
+    height: 2.1em;
+    width: 100%;
+    border-radius: 2px;
+    overflow: visible;
+  }
+  .seg {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-width: 0;
+    flex-shrink: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 0.82em;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-shadow: 0 0 3px rgba(26, 29, 31, 0.35);
+    box-shadow: inset -1px 0 0 var(--paper);
+  }
+  .seg-labelled {
+    padding: 0 0.45em;
+  }
+  .bar-empty {
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.82em;
+  }
+</style>

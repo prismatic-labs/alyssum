@@ -1,0 +1,128 @@
+---
+import Layout from "../components/Layout.astro";
+import Headline from "../components/Headline.astro";
+import PeriodicTable from "../components/PeriodicTable.astro";
+import Guide from "../components/Guide.astro";
+import MaterialDialog from "../components/MaterialDialog.astro";
+import LandDefs from "../components/LandDefs.astro";
+import { data } from "../lib/data";
+
+const MAP_WIDTH = 460;
+---
+
+<Layout>
+  <Headline />
+  <Guide />
+  <PeriodicTable />
+  <LandDefs width={MAP_WIDTH} />
+  {data.materials.map((m) => <MaterialDialog m={m} mapWidth={MAP_WIDTH} />)}
+</Layout>
+
+<script>
+  const table = document.querySelector<SVGSVGElement>(".ptable")!;
+  const els = [...table.querySelectorAll<SVGGElement>(".el")];
+  const links = [...table.querySelectorAll<SVGPathElement>(".link")];
+
+  function open(id: string) {
+    document.querySelectorAll<HTMLDialogElement>("dialog[open]").forEach((d) => d.close());
+    const d = document.getElementById(`d-${id}`) as HTMLDialogElement | null;
+    if (!d) return;
+    d.showModal();
+    history.replaceState(null, "", `#${id}`);
+  }
+
+  const readout = document.getElementById("readout")!;
+
+  function highlight(id: string | null) {
+    table.classList.toggle("hovering", id !== null);
+    const el = id ? els.find((e) => e.dataset.m === id) : undefined;
+    const say = el ? (table.dataset.mode === "eu" ? el.dataset.sayEu : el.dataset.sayTop) : null;
+    readout.textContent = say ?? readout.dataset.default!;
+    readout.classList.toggle("text-[var(--muted)]", !say);
+    const related = new Set<string>();
+    links.forEach((l) => {
+      const on = id !== null && (l.dataset.a === id || l.dataset.b === id);
+      l.classList.toggle("hl", on);
+      if (on) {
+        related.add(l.dataset.a!);
+        related.add(l.dataset.b!);
+      }
+    });
+    els.forEach((e) => {
+      e.classList.toggle("hl", e.dataset.m === id);
+      e.classList.toggle("rel", e.dataset.m !== id && related.has(e.dataset.m!));
+    });
+  }
+
+  els.forEach((e) => {
+    const id = e.dataset.m!;
+    e.addEventListener("mouseenter", () => highlight(id));
+    e.addEventListener("mouseleave", () => highlight(null));
+    e.addEventListener("focus", () => highlight(id));
+    e.addEventListener("blur", () => highlight(null));
+    e.addEventListener("click", () => open(id));
+    e.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        open(id);
+      }
+    });
+  });
+
+  const modeLine = document.getElementById("mode-line")!;
+  const modeButtons = [...document.querySelectorAll<HTMLButtonElement>(".mode button")];
+  modeButtons.forEach((b) =>
+    b.addEventListener("click", () => {
+      const mode = b.dataset.mode!;
+      table.dataset.mode = mode;
+      modeButtons.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+      modeLine.textContent = (mode === "eu" ? modeLine.dataset.eu : modeLine.dataset.top)!;
+      modeLine.style.color = mode === "eu" ? "var(--eu)" : "";
+    }),
+  );
+
+  document.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((b) =>
+    b.addEventListener("click", () => open(b.dataset.open!)),
+  );
+
+  document.querySelectorAll<HTMLDialogElement>("dialog.md").forEach((d) => {
+    const tip = d.querySelector<HTMLElement>(".map-tip")!;
+    let current: SVGCircleElement | null = null;
+    const hide = () => {
+      current?.classList.remove("on");
+      current = null;
+      tip.hidden = true;
+    };
+    const track = (ev: PointerEvent | MouseEvent) => {
+      const dot = (ev.target as Element).closest<SVGCircleElement>("circle.dot");
+      if (!dot) return hide();
+      if (dot !== current) {
+        current?.classList.remove("on");
+        current = dot;
+        dot.classList.add("on");
+        tip.querySelector<HTMLElement>(".swatch")!.style.background = dot.dataset.colour!;
+        tip.querySelector(".tip-name")!.textContent = dot.dataset.name!;
+        tip.querySelector(".tip-pct")!.textContent = dot.dataset.pct!;
+        tip.querySelector(".tip-amount")!.textContent = dot.dataset.amount!;
+        tip.hidden = false;
+      }
+      const flip = ev.clientX + tip.offsetWidth + 24 > window.innerWidth;
+      tip.style.left = `${flip ? ev.clientX - tip.offsetWidth - 14 : ev.clientX + 14}px`;
+      tip.style.top = `${ev.clientY - tip.offsetHeight - 10}px`;
+    };
+    d.addEventListener("pointerover", track);
+    d.addEventListener("pointermove", track);
+    d.addEventListener("click", track);
+    d.addEventListener("pointerleave", hide);
+    d.addEventListener("close", hide);
+    d.addEventListener("click", (ev) => {
+      if (ev.target === d) d.close();
+    });
+    d.addEventListener("close", () => {
+      if (!document.querySelector("dialog[open]")) history.replaceState(null, "", location.pathname);
+    });
+  });
+
+  const initial = location.hash.slice(1);
+  if (initial) open(initial);
+</script>

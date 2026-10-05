@@ -1,0 +1,321 @@
+---
+import { cells, ELEMENT_TO_MATERIAL, ELEMENT_NAMES, anchorSymbol } from "../lib/periodic";
+import type { Material } from "../lib/data";
+import { data, material, headlineRow, top, euShare, euShares, pct } from "../lib/data";
+import { countryName } from "../lib/countries";
+
+const NOUN: Record<string, string> = {
+  pgm: "platinum and palladium",
+  "rare-earths": "rare earths",
+};
+
+const REFINED_NOUN: Record<string, string> = {
+  aluminium: "aluminium metal",
+  copper: "refined copper",
+  gallium: "gallium",
+  titanium: "titanium metal",
+};
+
+function noun(m: Material): string {
+  const row = headlineRow(m);
+  if (row?.stage === "refined") return REFINED_NOUN[m.id] ?? row.what.toLowerCase();
+  return NOUN[m.id] ?? m.name.toLowerCase();
+}
+
+function verb(m: Material, plural = false): string {
+  const refined = headlineRow(m)?.stage === "refined";
+  return refined ? (plural ? "produce" : "produces") : plural ? "mine" : "mines";
+}
+
+function sayBlank(m: Material): string {
+  const first = m.reported?.rows.find((r) => r[1] !== null);
+  const lead = first ? ` ${countryName(first[0])} reports the most.` : "";
+  return m.reported ? `${m.name}: each country reports a different form, so there are no shares.${lead}` : `${m.name}: ${m.blank}`;
+}
+
+function sayTop(m: Material): string {
+  const row = headlineRow(m);
+  if (!row) return sayBlank(m);
+  const t = top(row);
+  const origin = m.origin.note ? ` ${m.origin.note}` : "";
+  return `${t.name} ${verb(m)} ${pct(t.share)} of the world's ${noun(m)}.${origin}`;
+}
+
+function sayEu(m: Material): string {
+  const row = headlineRow(m);
+  if (!row) return sayBlank(m);
+  const eu = euShares(row);
+  if (eu.length === 0) return `No EU country is among the producers USGS lists for ${noun(m)}.`;
+  const share = pct(euShare(row)).replace("<1%", "less than 1%");
+  return `EU countries ${verb(m, true)} ${share} of the world's ${noun(m)} (${eu.map((s) => s.name).join(", ")}).`;
+}
+
+const STEP = 44;
+const SIZE = 40;
+const PAD = 4;
+const all = cells();
+const pos = new Map(all.map((c) => [c.symbol, { x: PAD + c.col * STEP, y: PAD + c.row * STEP }]));
+const width = PAD * 2 + 18 * STEP - (STEP - SIZE);
+const height = PAD * 2 + 9.6 * STEP - (STEP - SIZE);
+const fill = { cn: "var(--cn)", eu: "var(--eu)", other: "var(--other)" } as Record<string, string>;
+
+const tiles = all.map((c) => {
+  const p = pos.get(c.symbol)!;
+  const id = ELEMENT_TO_MATERIAL[c.symbol];
+  const m = id ? material(id) : undefined;
+  const row = m ? headlineRow(m) : undefined;
+  const t = row ? top(row) : undefined;
+  const eu = row ? euShare(row) : 0;
+  const isAnchor = m ? anchorSymbol(m.id) === c.symbol : false;
+  return { ...c, ...p, id, m, t, eu, isAnchor };
+});
+
+// Neighbouring tiles leave no room for a straight arrow, so these arc out through empty cells on the given side.
+const ARC_SIDE: Record<string, "up" | "down" | "left"> = {
+  "Al>Ga": "left",
+  "Cu>Co": "up",
+  "Ni>Co": "up",
+  "Zn>Ga": "down",
+  "Zn>Ge": "down",
+  "Pb>Bi": "up",
+};
+
+function linkPath(fromSym: string, toSym: string): string {
+  const a = pos.get(fromSym)!;
+  const b = pos.get(toSym)!;
+  const ax = a.x + SIZE / 2;
+  const ay = a.y + SIZE / 2;
+  const bx = b.x + SIZE / 2;
+  const by = b.y + SIZE / 2;
+  const dx = bx - ax;
+  const dy = by - ay;
+  const len = Math.hypot(dx, dy);
+  const side = ARC_SIDE[`${fromSym}>${toSym}`];
+  if (side) {
+    const half = SIZE / 2 + 1;
+    const lean = (d: number) => Math.max(-SIZE * 0.3, Math.min(SIZE * 0.3, d * 0.25));
+    const out = STEP * 0.7 + len * 0.12;
+    if (side === "left") {
+      const cx = Math.min(ax, bx) - half - out;
+      return `M${ax - half},${ay + lean(dy)} Q${cx},${(ay + by) / 2} ${bx - half},${by - lean(dy)}`;
+    }
+    const sign = side === "up" ? -1 : 1;
+    const cy = (sign < 0 ? Math.min(ay, by) : Math.max(ay, by)) + sign * (half + out);
+    return `M${ax + lean(dx)},${ay + sign * half} Q${(ax + bx) / 2},${cy} ${bx - lean(dx)},${by + sign * half}`;
+  }
+  const ux = dx / len;
+  const uy = dy / len;
+  const trim = SIZE * 0.42;
+  const sx = ax + ux * trim;
+  const sy = ay + uy * trim;
+  const ex = bx - ux * trim;
+  const ey = by - uy * trim;
+  const bulge = Math.min(60, 12 + len * 0.25);
+  const cx = (sx + ex) / 2 - uy * bulge;
+  const cy = (sy + ey) / 2 + ux * bulge;
+  return `M${sx},${sy} Q${cx},${cy} ${ex},${ey}`;
+}
+
+const links = data.materials.flatMap((m) => {
+  const to = anchorSymbol(m.id)!;
+  return [
+    ...m.origin.hosts.map((host) => ({ from: host, to: m.id, d: linkPath(anchorSymbol(host)!, to) })),
+    ...m.origin.hostElements.map((sym) => ({ from: sym, to: m.id, d: linkPath(sym, to) })),
+  ];
+});
+
+const DEFAULT_READOUT = "Hover over a tile for the headline. Click it for the full picture.";
+---
+
+<div class="ptable-scroll">
+<svg
+  viewBox={`0 0 ${width} ${height}`}
+  class="ptable block h-auto w-full select-none"
+  data-mode="top"
+  role="group"
+  aria-label="Periodic table with the EU's strategic raw materials highlighted"
+>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <g class="links-back" fill="none" stroke="var(--ink)" stroke-width="1.3" opacity="0.45" pointer-events="none">
+    {links.map((l) => <path d={l.d} marker-end="url(#arrow)" />)}
+  </g>
+
+  {
+    tiles.map((t) => {
+      if (t.placeholder) {
+        return (
+          <text x={t.x + SIZE / 2} y={t.y + SIZE / 2 + 3} text-anchor="middle" font-size="8" fill="#c3beb3">
+            {t.symbol === "*" ? "57–71" : "89–103"}
+          </text>
+        );
+      }
+      if (!t.m) {
+        return (
+          <g class="ghost">
+            <rect x={t.x} y={t.y} width={SIZE} height={SIZE} rx="3" fill="rgba(26,29,31,0.025)" />
+            <text x={t.x + SIZE / 2} y={t.y + SIZE / 2 + 4} text-anchor="middle" font-size="11" fill="#bdb8ad">
+              {t.symbol}
+            </text>
+          </g>
+        );
+      }
+      const share = t.t?.share ?? 0;
+      const fillTop = t.y + SIZE * (1 - share);
+      const clipId = `fill-${t.symbol}`;
+      const name = ELEMENT_NAMES[t.symbol] ?? "";
+      const names = (
+        <g class="halo">
+          <text x={t.x + SIZE / 2} y={t.y + 15} text-anchor="middle" font-size="13" font-weight="700" class="font-display" fill="var(--ink)">
+            {t.symbol}
+          </text>
+          <text
+            x={t.x + SIZE / 2}
+            y={t.y + 24.5}
+            text-anchor="middle"
+            font-size="6.6"
+            font-weight="600"
+            fill="var(--ink)"
+            {...(name.length > 9 ? { textLength: SIZE - 4, lengthAdjust: "spacingAndGlyphs" } : {})}
+          >
+            {name}
+          </text>
+        </g>
+      );
+      const labels = (colour: string) => (
+        <>
+          {t.isAnchor && (
+            <text class={t.t ? "pct-top" : undefined} x={t.x + SIZE - 3} y={t.y + SIZE - 3.5} text-anchor="end" font-size="7.5" font-weight="700" fill={colour}>
+              {t.t ? pct(share) : "?"}
+            </text>
+          )}
+        </>
+      );
+      return (
+        <g
+          class="el"
+          data-m={t.id}
+          data-say-top={sayTop(t.m)}
+          data-say-eu={sayEu(t.m)}
+          role={t.isAnchor ? "button" : undefined}
+          tabindex={t.isAnchor ? 0 : undefined}
+          aria-label={t.isAnchor ? `${t.m.name}. ${sayTop(t.m)}` : undefined}
+          aria-hidden={t.isAnchor ? undefined : "true"}
+        >
+          <rect class="el-bg" x={t.x} y={t.y} width={SIZE} height={SIZE} rx="3" fill="var(--paper)" />
+          {t.t && (
+            <>
+              <clipPath id={clipId}>
+                <rect x={t.x} y={fillTop} width={SIZE} height={SIZE * share} />
+              </clipPath>
+              <rect class="fill fill-top" x={t.x} y={t.y} width={SIZE} height={SIZE} fill={fill[t.t.bloc]} style={`--s:${share}`} />
+              <rect class="fill fill-eu" x={t.x} y={t.y} width={SIZE} height={SIZE} fill="var(--eu)" style={`--s:${t.eu}`} />
+            </>
+          )}
+          {names}
+          {labels("var(--ink)")}
+          {t.t && (
+            <g class="over-top" clip-path={`url(#${clipId})`}>
+              {labels("#fff")}
+            </g>
+          )}
+          {t.isAnchor && t.t && (
+            <text class="pct-eu" x={t.x + SIZE - 3} y={t.y + SIZE - 3.5} text-anchor="end" font-size="7.5" font-weight="700" fill="var(--eu)">
+              {pct(t.eu)}
+            </text>
+          )}
+          <rect class="el-frame" x={t.x} y={t.y} width={SIZE} height={SIZE} rx="3" fill="none" stroke="var(--ink)" stroke-width="1.5" />
+        </g>
+      );
+    })
+  }
+
+  <g class="links" fill="none" stroke="var(--ink)" stroke-width="1.6" pointer-events="none">
+    {links.map((l) => <path class="link" data-a={l.from} data-b={l.to} d={l.d} marker-end="url(#arrow)" />)}
+  </g>
+</svg>
+</div>
+
+<p id="readout" class="font-display m-0 mt-2 min-h-[1.6em] text-center text-lg text-[var(--muted)]" aria-live="polite" data-default={DEFAULT_READOUT}>
+  {DEFAULT_READOUT}
+</p>
+
+<style>
+  .ptable-scroll {
+    overflow-x: auto;
+  }
+  .ptable {
+    min-width: 720px;
+  }
+  .ptable :global(.el) {
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .ptable :global(.el:focus-visible) {
+    outline: none;
+  }
+  .ptable :global(.el:focus-visible .el-frame),
+  .ptable :global(.el.hl .el-frame) {
+    stroke-width: 3;
+  }
+  .ptable :global(.halo text) {
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: 2.4px;
+    stroke-linejoin: round;
+  }
+  .ptable :global(.fill) {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+  .ptable :global(.fill-top) {
+    transform: scaleY(var(--s));
+  }
+  .ptable :global(.fill-eu) {
+    transform: scaleY(0);
+  }
+  .ptable[data-mode="eu"] :global(.fill-top) {
+    transform: scaleY(0);
+  }
+  .ptable[data-mode="eu"] :global(.fill-eu) {
+    transform: scaleY(var(--s));
+  }
+  .ptable :global(.over-top),
+  .ptable :global(.pct-top),
+  .ptable :global(.pct-eu) {
+    transition: opacity 0.3s;
+  }
+  .ptable :global(.pct-eu) {
+    opacity: 0;
+  }
+  .ptable[data-mode="eu"] :global(.over-top),
+  .ptable[data-mode="eu"] :global(.pct-top) {
+    opacity: 0;
+  }
+  .ptable[data-mode="eu"] :global(.pct-eu) {
+    opacity: 1;
+  }
+  .ptable :global(.link) {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .ptable.hovering :global(.el:not(.hl):not(.rel)) {
+    opacity: 0.3;
+  }
+  .ptable.hovering :global(.links-back) {
+    opacity: 0.1;
+  }
+  .ptable.hovering :global(.link.hl) {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ptable :global(.fill) {
+      transition: none;
+    }
+  }
+</style>

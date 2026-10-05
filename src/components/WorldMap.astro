@@ -1,0 +1,141 @@
+---
+import type { Row } from "../lib/data";
+import { pct, colours, num, unitWord } from "../lib/data";
+import { worldMap } from "../lib/geo";
+
+interface Props {
+  row?: Row;
+  width?: number;
+  labels?: boolean;
+  /** Reference land drawn once by <LandDefs width={width} /> instead of inlining it. */
+  sharedLand?: boolean;
+}
+
+const { row, width = 320, labels = false, sharedLand = false } = Astro.props;
+const m = worldMap(row, width);
+const circles = [...m.circles].sort((a, b) => b.r - a.r);
+const palette = row ? colours(row) : new Map<string, string>();
+const landFill = { eu: "var(--land-eu)", cn: "var(--land-cn)" } as Record<string, string>;
+
+type Box = { x0: number; y0: number; x1: number; y1: number };
+type Circle = (typeof circles)[number];
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+const hitsCircle = (b: Box, c: Circle) => Math.hypot(c.x - clamp(c.x, b.x0, b.x1), c.y - clamp(c.y, b.y0, b.y1)) < c.r;
+const hitsBox = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+const outOfBounds = (b: Box) => b.x0 < 0 || b.x1 > m.width || b.y0 < -6 || b.y1 > m.height + 6;
+
+type Option = { box: Box; size: number; colour: string; rank: number };
+const labelled = labels ? circles.filter((c) => c.share >= 0.05) : [];
+
+const optionsFor = labelled.map((c) => {
+  const text = [c.name, pct(c.share)];
+  const box = (size: number, cx: number, cy: number): Box => {
+    const w = Math.max(...text.map((t) => t.length)) * size * 0.56;
+    const h = size * 2.15;
+    return { x0: cx - w / 2, y0: cy - h / 2, x1: cx + w / 2, y1: cy + h / 2 };
+  };
+  const opts: Option[] = [];
+  if (c.r >= 30) {
+    const s = Math.min(15, c.r * 0.32);
+    opts.push({ box: box(s, c.x, c.y), size: s, colour: "#fff", rank: 0 });
+  }
+  const s = 10;
+  const probe = box(s, 0, 0);
+  const w = probe.x1 - probe.x0;
+  const h = probe.y1 - probe.y0;
+  const d = c.r + 3;
+  const diag = c.r * 0.72 + 3;
+  const spots: [number, number][] = [
+    [d + w / 2, 0],
+    [-d - w / 2, 0],
+    [0, d + h / 2],
+    [0, -d - h / 2],
+    [diag + w / 2, diag + h / 2 - 4],
+    [diag + w / 2, -diag - h / 2 + 4],
+    [-diag - w / 2, diag + h / 2 - 4],
+    [-diag - w / 2, -diag - h / 2 + 4],
+  ];
+  spots.forEach(([dx, dy], i) => opts.push({ box: box(s, c.x + dx, c.y + dy), size: s, colour: "var(--ink)", rank: i + 1 }));
+  return { c, text, opts };
+});
+
+// Labels must never overlap each other; covering another circle or spilling off the map is a lesser cost.
+function cost(i: number, o: Option, chosen: (Option | undefined)[]): number {
+  const self = labelled[i];
+  const labelHits = chosen.filter((p, j) => p && j !== i && hitsBox(o.box, p.box)).length;
+  const circleHits = circles.filter((other) => other !== self && hitsCircle(o.box, other)).length;
+  return labelHits * 1000 + circleHits * 100 + (outOfBounds(o.box) ? 60 : 0) + o.rank;
+}
+
+const chosen: (Option | undefined)[] = [];
+for (let pass = 0; pass < 3; pass++) {
+  optionsFor.forEach(({ opts }, i) => {
+    chosen[i] = opts.reduce((best, o) => (cost(i, o, chosen) < cost(i, best, chosen) ? o : best));
+  });
+}
+const placedLabels = optionsFor.map(({ text }, i) => ({ text, ...chosen[i]! }));
+---
+
+<style>
+  .dot {
+    cursor: default;
+    transition:
+      fill-opacity 0.15s,
+      stroke-width 0.15s;
+  }
+  .dot:hover,
+  .dot.on {
+    fill-opacity: 1;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .map-label {
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: rgba(247, 246, 242, 0.85);
+    stroke-width: 2.5px;
+  }
+  .map-label[fill="#fff"] {
+    stroke: none;
+  }
+</style>
+
+<svg viewBox={`0 0 ${m.width} ${m.height}`} class="block h-auto w-full overflow-visible" role="img" aria-label={circles.slice(0, 3).map((c) => `${c.name} ${pct(c.share)}`).join(", ") || "No figures"}>
+  {
+    sharedLand ? (
+      <use href={`#land-${width}`} />
+    ) : (
+      m.land.map((l) => <path d={l.d} fill={l.tint ? landFill[l.tint] : "var(--land)"} stroke="var(--paper)" stroke-width="0.4" />)
+    )
+  }
+  {
+    circles.map((c) => (
+      <circle
+        class="dot"
+        cx={c.x}
+        cy={c.y}
+        r={Math.max(c.r, 2.5)}
+        fill={palette.get(c.code) ?? "var(--other)"}
+        fill-opacity="0.88"
+        stroke="var(--paper)"
+        stroke-width="0.8"
+        data-name={c.name}
+        data-pct={pct(c.share)}
+        data-amount={row ? `${num(c.value)} ${unitWord(row.unit)}` : ""}
+        data-colour={palette.get(c.code) ?? "var(--other)"}
+      />
+
+    ))
+  }
+  {
+    placedLabels.map(({ text, size, box, colour }) => {
+      const x = (box.x0 + box.x1) / 2;
+      return (
+        <text x={x} y={box.y0 + size * 0.85} text-anchor="middle" font-size={size} font-weight="600" fill={colour} class="map-label">
+          <tspan x={x}>{text[0]}</tspan>
+          <tspan x={x} dy="1.1em">{text[1]}</tspan>
+        </text>
+      );
+    })
+  }
+</svg>

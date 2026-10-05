@@ -1,0 +1,19 @@
+---
+import { worldMap } from "../lib/geo";
+
+interface Props {
+  width: number;
+}
+
+const { width } = Astro.props;
+const m = worldMap(undefined, width);
+const landFill = { eu: "var(--land-eu)", cn: "var(--land-cn)" } as Record<string, string>;
+---
+
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <defs>
+    <g id={`land-${width}`}>
+      {m.land.map((l) => <path d={l.d} fill={l.tint ? landFill[l.tint] : "var(--land)"} stroke="var(--paper)" stroke-width="0.4" />)}
+    </g>
+  </defs>
+</svg>

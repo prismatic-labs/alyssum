@@ -1,0 +1,47 @@
+---
+import { chinaLeads, bestEu, pct, data } from "../lib/data";
+
+const { leads, of } = chinaLeads();
+const eu = bestEu();
+const topLine = `China comes first in ${leads} of the ${of} we have figures for.`;
+const euLine = `The EU's biggest share of any of them is ${pct(eu.share)}, in ${eu.m.name.toLowerCase()}.`;
+---
+
+<section class="mb-6">
+  <h1 class="font-display m-0 text-[clamp(1.6rem,3.6vw,3rem)] font-bold leading-[1.08] tracking-tight">
+    Who makes the EU's {data.materials.length} strategic raw materials?
+  </h1>
+  <p class="m-0 mt-2 max-w-2xl text-[var(--muted)]">
+    The EU's Critical Raw Materials Act picks them for clean tech, digital, defence and space. Each tile shows how much of the world's
+    supply comes from one place.
+  </p>
+  <p class="m-0 mt-1.5 max-w-2xl text-sm text-[var(--muted)]">
+    Sources: the list is from the EU's <a href={data.list.url}>Critical Raw Materials Act</a>. Production figures are the US Geological
+    Survey's (USGS) estimates for 2024, from its <a href={data.source.url}>Mineral Commodity Summaries 2025</a>.
+  </p>
+  <div class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+    <div class="mode inline-flex rounded-full border border-[var(--ink)] p-0.5 text-sm font-semibold" role="radiogroup" aria-label="What the tiles show">
+      <button role="radio" aria-checked="true" data-mode="top" class="rounded-full px-3.5 py-1">Top country</button>
+      <button role="radio" aria-checked="false" data-mode="eu" class="rounded-full px-3.5 py-1">The EU</button>
+    </div>
+    <p id="mode-line" class="font-display m-0 text-lg font-semibold" data-top={topLine} data-eu={euLine}>
+      {topLine}
+    </p>
+  </div>
+</section>
+
+<style>
+  .mode button {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .mode button[aria-checked="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mode button[data-mode="eu"][aria-checked="true"] {
+    background: var(--eu);
+  }
+</style>

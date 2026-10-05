@@ -1,0 +1,338 @@
+---
+import type { Material, Row } from "../lib/data";
+import { data, material, withheld, shares, colours, pct, num, unitWord } from "../lib/data";
+import { countryName } from "../lib/countries";
+import { elementsOf, ELEMENT_NAMES } from "../lib/periodic";
+import { GLOSSARY } from "../lib/glossary";
+import Bar from "./Bar.astro";
+import WorldMap from "./WorldMap.astro";
+
+interface Props {
+  m: Material;
+  mapWidth: number;
+}
+
+const { m, mapWidth } = Astro.props;
+const DEFAULT_LABEL: Record<string, string> = { mined: "Dug up", refined: "Refined", source: "Comes out of" };
+
+interface Step {
+  label: string;
+  row?: Row;
+}
+const steps: Step[] = m.rows.map((row) => ({ label: row.label ?? DEFAULT_LABEL[row.stage], row }));
+if (!m.blank) {
+  if (!m.rows.some((r) => r.stage === "mined" || r.stage === "source")) steps.unshift({ label: "Dug up" });
+  if (!m.rows.some((r) => r.stage === "refined")) steps.push({ label: "Refined" });
+}
+
+const hosts = m.origin.hosts.map((id) => material(id)!).filter(Boolean);
+const gives = data.materials.filter((x) => x.origin.hosts.includes(m.id));
+const sources = [
+  ...new Set([...m.rows.map((r) => r.source.url), m.origin.source, m.source?.url].filter((u): u is string => Boolean(u))),
+];
+const sourceName = (u: string) => u.replace(/.*mcs2025-(.*)\.pdf$/, "$1").replace(/-/g, " ");
+const elements = elementsOf(m.id);
+const NAMED = 0.05;
+const keyLine = (row: Row) => {
+  const palette = colours(row);
+  const named = shares(row).filter((s) => s.share >= NAMED);
+  const others = 1 - named.reduce((sum, s) => sum + s.share, 0);
+  return [
+    ...named.map((s) => ({ name: s.name, share: s.share, colour: palette.get(s.code)! })),
+    ...(others > 0.005 ? [{ name: "everyone else", share: others, colour: "var(--rest)" }] : []),
+  ];
+};
+const hasChips = m.origin.minerals.length + m.origin.alsoFrom.length + hosts.length + gives.length > 0;
+const cols = steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
+---
+
+<dialog id={`d-${m.id}`} class="md" aria-labelledby={`h-${m.id}`}>
+  <form method="dialog" class="absolute right-3 top-3">
+    <button class="md-close" aria-label="Close">×</button>
+  </form>
+
+  <header class="pr-10">
+    <h2 id={`h-${m.id}`} class="font-display m-0 text-[1.75em] font-bold leading-tight">{m.name}</h2>
+    <p class="m-0 text-[0.8em] text-[var(--muted)]">
+      EU list: {m.annex} · Figures: US Geological Survey (USGS), estimates for 2024
+    </p>
+    <div class="mt-3 flex flex-wrap gap-1.5">
+      {
+        elements.map((s) => (
+          <span class="el-tile">
+            <b>{s}</b>
+            <small>{ELEMENT_NAMES[s]}</small>
+          </span>
+        ))
+      }
+    </div>
+  </header>
+
+  {
+    hasChips && (
+      <div class="mt-4 flex flex-wrap items-center gap-1.5 text-[0.9em]">
+        {m.origin.minerals.map((x) => (
+          <span class="chip chip-mineral" data-tip={GLOSSARY[x]} tabindex={GLOSSARY[x] ? 0 : undefined}>
+            {x}
+            {GLOSSARY[x] && <span class="sr-only">: {GLOSSARY[x]}</span>}
+          </span>
+        ))}
+        {m.origin.alsoFrom.map((x) => (
+          <span class="chip" data-tip={GLOSSARY[x]} tabindex={GLOSSARY[x] ? 0 : undefined}>
+            {x}
+            {GLOSSARY[x] && <span class="sr-only">: {GLOSSARY[x]}</span>}
+          </span>
+        ))}
+        {hosts.map((h) => (
+          <button class="chip chip-link" data-open={h.id}>
+            comes out of {h.name.toLowerCase()} →
+          </button>
+        ))}
+        {gives.map((g) => (
+          <button class="chip chip-link" data-open={g.id}>
+            gives {g.name.toLowerCase()} →
+          </button>
+        ))}
+      </div>
+    )
+  }
+  {m.origin.note && <p class="m-0 mt-2 max-w-3xl text-[0.95em]">{m.origin.note}</p>}
+
+  {
+    m.blank ? (
+      <div class="mt-5">
+        {!m.reported && <p class="m-0 max-w-xl text-[var(--muted)]">{m.blank}</p>}
+        {m.reported && (
+          <table class="reported mt-4">
+            <caption class="step-label text-left">What each country reports, {m.reported.year}</caption>
+            <tbody>
+              {m.reported.rows.map(([code, value, form]) => (
+                <tr>
+                  <th scope="row">{countryName(code)}</th>
+                  <td class="font-tabular text-right">{value === null ? "withheld" : `${num(value)}`}</td>
+                  <td class="text-[var(--muted)]">{value === null ? "" : `${unitWord(m.reported!.unit)} of ${form}`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    ) : (
+      <div class:list={["mt-5 grid gap-6", cols]}>
+        {steps.map((s) => {
+          const row = s.row;
+          const hidden = row ? withheld(row) : [];
+          return (
+            <section>
+              <h3 class="step-label">{s.label}</h3>
+              <Bar row={row} empty="USGS publishes no country figures for this step" />
+              {row && (
+                <p class="m-0 mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.9em]">
+                  {keyLine(row).map((k) => (
+                    <span class="whitespace-nowrap">
+                      <span class="swatch" style={`background:${k.colour}`} />
+                      {k.name} <b class="font-tabular">{pct(k.share)}</b>
+                    </span>
+                  ))}
+                </p>
+              )}
+              <p class="m-0 mt-0.5 min-h-[1.2em] text-[0.8em] text-[var(--muted)]">
+                {row?.what}
+                {row?.note && <> · {row.note}</>}
+                {hidden.length > 0 && <> · Withheld: {hidden.join(", ")}</>}
+              </p>
+              {row ? <WorldMap row={row} width={mapWidth} labels sharedLand /> : <div class="map-empty" />}
+            </section>
+          );
+        })}
+      </div>
+    )
+  }
+
+  <div class="map-tip" aria-hidden="true" hidden>
+    <span class="swatch"></span><b class="tip-name"></b> <b class="tip-pct font-tabular"></b>
+    <span class="tip-amount"></span>
+  </div>
+
+  <p class="m-0 mt-4 text-[0.8em] text-[var(--muted)]">
+    No separate figures for recycling · USGS: {sources.map((u, i) => <>{i > 0 && ", "}<a href={u}>{sourceName(u)}</a></>)}
+  </p>
+</dialog>
+
+<style>
+  .md {
+    width: min(1800px, 96vw);
+    max-height: 94vh;
+    margin: auto;
+    border: 0;
+    border-radius: 8px;
+    padding: clamp(1.25rem, 2.2vw, 2.5rem);
+    font-size: clamp(1rem, 0.75rem + 0.45vw, 1.2rem);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 30px 80px rgba(26, 29, 31, 0.35);
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.2s,
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      display 0.25s allow-discrete,
+      overlay 0.25s allow-discrete;
+  }
+  .md:not([open]) {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  @starting-style {
+    .md[open] {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+  }
+  .md::backdrop {
+    background: rgba(26, 29, 31, 0.45);
+  }
+  .md-close {
+    font-size: 1.6rem;
+    line-height: 1;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: var(--ink);
+    padding: 0.2rem 0.5rem;
+  }
+  .el-tile {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.4em;
+    height: 3.2em;
+    padding: 0 0.3rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    line-height: 1.1;
+  }
+  .el-tile b {
+    font-family: "Familjen Grotesk", ui-sans-serif, sans-serif;
+    font-size: 1.15em;
+  }
+  .el-tile small {
+    font-size: 0.62em;
+    color: var(--muted);
+  }
+  .step-label {
+    margin: 0 0 0.4rem;
+    font-family: "Familjen Grotesk", ui-sans-serif, sans-serif;
+    font-weight: 700;
+    font-size: 0.75em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.1rem 0.65rem;
+    background: transparent;
+    font: inherit;
+    font-size: 0.95em;
+    color: var(--ink);
+  }
+  .chip-mineral {
+    border-radius: 4px 10px 6px 12px;
+    background: #ebe6db;
+    border-color: #d3ccbd;
+  }
+  .chip[data-tip] {
+    position: relative;
+    cursor: help;
+    text-decoration: underline dotted var(--muted);
+    text-underline-offset: 3px;
+  }
+  .chip[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 5;
+    width: max-content;
+    max-width: 18rem;
+    padding: 0.45em 0.65em;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85em;
+    line-height: 1.35;
+    text-decoration: none;
+    white-space: normal;
+    box-shadow: 0 6px 20px rgba(26, 29, 31, 0.25);
+    opacity: 0;
+    transform: translateY(-2px);
+    pointer-events: none;
+    transition:
+      opacity 0.12s,
+      transform 0.12s;
+  }
+  .chip[data-tip]:hover::after,
+  .chip[data-tip]:focus-visible::after {
+    opacity: 1;
+    transform: none;
+  }
+  .chip-link {
+    cursor: pointer;
+    border-color: var(--ink);
+  }
+  .chip-link:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .reported {
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+  .reported th,
+  .reported td {
+    padding: 0.2rem 0.9rem 0.2rem 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+    text-align: left;
+  }
+  .reported td.text-right {
+    text-align: right;
+  }
+  .map-empty {
+    display: none;
+  }
+  .map-tip {
+    position: fixed;
+    z-index: 10;
+    pointer-events: none;
+    padding: 0.35em 0.6em;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85em;
+    line-height: 1.35;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(26, 29, 31, 0.25);
+  }
+  .map-tip[hidden] {
+    display: none;
+  }
+  .tip-amount {
+    display: block;
+    opacity: 0.7;
+    font-size: 0.9em;
+  }
+  @media (min-width: 768px) {
+    .map-empty {
+      display: block;
+      aspect-ratio: 100 / 47;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+    }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+---
+
+<aside class="guide" aria-label="How to read a tile">
+  <svg viewBox="0 0 56 56" class="guide-tile" aria-hidden="true">
+    <rect x="0.75" y="0.75" width="54.5" height="54.5" rx="3" fill="var(--paper)" />
+    <rect x="0.75" y="17" width="54.5" height="38.25" fill="var(--other)" />
+    <rect x="0.75" y="0.75" width="54.5" height="54.5" rx="3" fill="none" stroke="var(--ink)" stroke-width="1.5" />
+    <g class="halo">
+      <text x="28" y="22" text-anchor="middle" font-size="18" font-weight="700" class="font-display" fill="var(--ink)">Xx</text>
+      <text x="28" y="34" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--ink)">Element</text>
+    </g>
+    <text x="51" y="50" text-anchor="end" font-size="10" font-weight="700" fill="#fff">70%</text>
+  </svg>
+  <dl>
+    <div><dt>How full</dt><dd>share of world supply: the top country's, or the EU's</dd></div>
+    <div>
+      <dt>Colour</dt>
+      <dd>
+        <span class="swatch bg-cn"></span>China <span class="swatch bg-eu ml-2"></span>EU <span class="swatch bg-other ml-2"></span>anyone else
+      </dd>
+    </div>
+    <div><dt>Step</dt><dd>refined output where we have it, mined if not</dd></div>
+    <div>
+      <dt>
+        <svg viewBox="0 0 30 14" class="inline h-3 w-6 align-baseline" aria-hidden="true">
+          <path d="M2,12 Q15,-2 26,10" fill="none" stroke="var(--ink)" stroke-width="1.5" />
+          <path d="M23,6 L28,12 L21,12 z" fill="var(--ink)" />
+        </svg>
+        <span class="sr-only">Arrow</span>
+      </dt>
+      <dd>by-product: comes out of the other's ore</dd>
+    </div>
+    <div><dt class="q">?</dt><dd>no usable figures</dd></div>
+    <div><dt class="faded">Zn</dt><dd>faded: not on the EU list</dd></div>
+  </dl>
+</aside>
+
+<style>
+  .guide {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  .guide-tile {
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+  }
+  .guide :global(.halo text) {
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: 2.4px;
+  }
+  dl {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.6rem;
+  }
+  dl > div {
+    display: flex;
+    gap: 0.4rem;
+    align-items: baseline;
+  }
+  dt {
+    white-space: nowrap;
+    font-family: "Familjen Grotesk", ui-sans-serif, sans-serif;
+    font-weight: 700;
+  }
+  dd {
+    margin: 0;
+    color: var(--muted);
+  }
+  .faded {
+    color: #bdb8ad;
+    font-weight: 400;
+  }
+  .q {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.05rem;
+    height: 1.05rem;
+    border: 1.2px solid var(--ink);
+    border-radius: 2px;
+    font-size: 0.7rem;
+  }
+</style>
