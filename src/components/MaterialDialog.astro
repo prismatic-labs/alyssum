@@ -32,7 +32,7 @@ const gives = data.materials.filter((x) => x.origin.hosts.includes(m.id));
 const sources = [
   ...new Set([...m.rows.map((r) => r.source.url), m.origin.source, m.source?.url].filter((u): u is string => Boolean(u))),
 ];
-const sourceName = (u: string) => u.replace(/.*mcs2025-(.*)\.pdf$/, "$1").replace(/-/g, " ");
+const sourceName = (u: string) => u.replace(/.*mcs\d{4}-(.*)\.pdf$/, "$1").replace(/-/g, " ");
 const elements = elementsOf(m.id);
 const NAMED = 0.05;
 const keyLine = (row: Row) => {
@@ -56,7 +56,7 @@ const cols = steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
   <header class="pr-10">
     <h2 id={`h-${m.id}`} class="font-display m-0 text-[1.75em] font-bold leading-tight">{m.name}</h2>
     <p class="m-0 text-[0.8em] text-[var(--muted)]">
-      EU list: {m.annex} · Figures: US Geological Survey (USGS), estimates for 2024
+      EU list: {m.annex} · Figures: US Geological Survey (USGS), estimates for {data.year}
     </p>
     <div class="mt-3 flex flex-wrap gap-1.5">
       {

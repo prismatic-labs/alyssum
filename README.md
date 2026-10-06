@@ -7,7 +7,7 @@ Live: https://prismatic-labs.github.io/alyssum/
 ## Sources
 
 - **The list:** the 17 strategic raw materials in Annex I, Section 1 of the [Critical Raw Materials Act](https://eur-lex.europa.eu/eli/reg/2024/1252/oj) (Regulation (EU) 2024/1252).
-- **The figures:** US Geological Survey, [Mineral Commodity Summaries 2025](https://pubs.usgs.gov/periodicals/mcs2025/mcs2025.pdf), estimates for 2024. Each material links to its USGS chapter.
+- **The figures:** US Geological Survey, [Mineral Commodity Summaries 2026](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf), estimates for 2025. Each material links to its USGS chapter. Each MCS edition carries two years and restates the earlier one, so every row records the edition it was read from.
 
 Every number comes from those tables. Where USGS publishes no country figures (germanium, refined cobalt, refined lithium) or the figures can't be compared (boron), the tile is left blank rather than estimated.
 
