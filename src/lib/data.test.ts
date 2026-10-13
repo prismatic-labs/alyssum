@@ -71,9 +71,21 @@ describe("shares", () => {
   });
 
   it("uses the listed sum when it is larger than the rounded world total", () => {
-    const mg = data.materials.find((m) => m.id === "magnesium")!.rows[0];
-    expect(worldTotal(mg)).toBe(1045);
-    expect(pct(shares(mg)[0].share)).toBe("91%");
+    // Gallium is the sharpest case: USGS rounds the world total to 900,000 kg while
+    // the named producers sum to 909,000, so dividing by the rounded total would
+    // render China at exactly 100%.
+    const ga = data.materials
+      .find((m) => m.id === "gallium")!
+      .rows.find((r) => r.what === "Primary gallium")!;
+    expect(ga.world).toBe(900000);
+    expect(worldTotal(ga)).toBe(909000);
+    expect(pct(shares(ga)[0].share)).toBe("99%");
+    expect(shares(ga)[0].share).toBeLessThan(1);
+  });
+
+  it("keeps every row's named shares under 100% on the 2026 figures", () => {
+    const over = rows.filter(({ row }) => shares(row).some((x) => x.share > 1));
+    expect(over.map(({ m }) => m.id)).toEqual([]);
   });
 });
 

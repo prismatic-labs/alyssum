@@ -7,10 +7,14 @@ export type Stage = "mined" | "refined" | "source";
 export interface Source {
   url: string;
   table: string;
+  /** Which USGS Mineral Commodity Summaries edition the figure was read from. */
+  edition?: string;
 }
 
 export interface Row {
   stage: Stage;
+  /** Production year these figures are for. Each MCS edition carries two years. */
+  year?: number;
   /** Heading shown above the step, e.g. "Dug up", "Smelted". */
   label?: string;
   what: string;

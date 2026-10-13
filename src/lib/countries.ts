@@ -47,6 +47,7 @@ export const COUNTRIES: Record<string, Country> = {
   LA: { name: "Laos", at: [103.8, 18.5] },
   LK: { name: "Sri Lanka", at: [80.7, 7.6] },
   MG: { name: "Madagascar", at: [46.7, -19.4] },
+  ML: { name: "Mali", at: [-4.0, 17.6] },
   MM: { name: "Myanmar", at: [96.5, 21.0] },
   MX: { name: "Mexico", at: [-102.5, 23.9] },
   MY: { name: "Malaysia", at: [102.0, 4.2] },

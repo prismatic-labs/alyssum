@@ -11,11 +11,11 @@
     "citation": "Regulation (EU) 2024/1252, Article 5(1)(b)",
     "url": "https://eur-lex.europa.eu/eli/reg/2024/1252/oj"
   },
-  "year": 2024,
-  "yearNote": "USGS estimates for 2024",
+  "year": 2025,
+  "yearNote": "USGS estimates for 2025",
   "source": {
-    "name": "USGS Mineral Commodity Summaries 2025",
-    "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025.pdf",
+    "name": "USGS Mineral Commodity Summaries 2026",
+    "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf",
     "licence": "Public domain (US Government work)"
   },
   "materials": [
@@ -31,7 +31,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bauxite-alumina.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bauxite-alumina.pdf",
         "note": null
       },
       "rows": [
@@ -39,15 +39,11 @@
           "stage": "mined",
           "what": "Bauxite",
           "unit": "kt",
-          "world": 450000,
+          "world": 440000,
           "producers": [
             [
-              "US",
-              null
-            ],
-            [
               "AU",
-              100000
+              97000
             ],
             [
               "BR",
@@ -55,70 +51,76 @@
             ],
             [
               "CN",
-              93000
-            ],
-            [
-              "GR",
-              1200
+              87000
             ],
             [
               "GN",
-              130000
+              150000
+            ],
+            [
+              "GR",
+              960
+            ],
+            [
+              "ID",
+              10000
             ],
             [
               "IN",
               25000
             ],
             [
-              "ID",
-              32000
-            ],
-            [
               "JM",
-              6100
+              6200
             ],
             [
               "KZ",
-              4900
+              4800
             ],
             [
               "RU",
-              6300
+              5700
             ],
             [
               "SA",
-              5800
+              5700
             ],
             [
               "TR",
-              3200
+              3800
+            ],
+            [
+              "US",
+              null
             ],
             [
               "VN",
-              4200
+              3800
             ]
           ],
-          "other": 5700,
+          "other": 8000,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bauxite-alumina.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bauxite-alumina.pdf",
+            "edition": "MCS 2026",
             "table": "World Bauxite Mine Production"
           },
-          "label": "Dug up"
+          "label": "Dug up",
+          "year": 2025
         },
         {
           "stage": "refined",
           "label": "Refined",
           "what": "Alumina",
           "unit": "kt",
-          "world": 142000,
+          "world": 150000,
           "producers": [
             [
-              "US",
-              720
+              "AE",
+              2300
             ],
             [
               "AU",
-              18000
+              17000
             ],
             [
               "BR",
@@ -130,31 +132,35 @@
             ],
             [
               "CN",
-              84000
+              93000
             ],
             [
               "DE",
-              960
+              460
             ],
             [
-              "GR",
-              860
+              "ES",
+              810
             ],
             [
               "GN",
-              300
+              360
             ],
             [
-              "IN",
-              7600
+              "GR",
+              850
             ],
             [
               "ID",
-              1300
+              1500
             ],
             [
               "IE",
-              1600
+              1700
+            ],
+            [
+              "IN",
+              8200
             ],
             [
               "JM",
@@ -162,7 +168,7 @@
             ],
             [
               "KZ",
-              1400
+              1500
             ],
             [
               "RU",
@@ -170,40 +176,38 @@
             ],
             [
               "SA",
-              1800
-            ],
-            [
-              "ES",
-              820
+              1900
             ],
             [
               "TR",
-              320
+              310
             ],
             [
-              "AE",
-              2400
+              "US",
+              710
             ],
             [
               "VN",
               1500
             ]
           ],
-          "other": 1500,
+          "other": 1300,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bauxite-alumina.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bauxite-alumina.pdf",
+            "edition": "MCS 2026",
             "table": "World Alumina Refinery Production"
-          }
+          },
+          "year": 2025
         },
         {
           "stage": "refined",
           "what": "Aluminium metal",
           "unit": "kt",
-          "world": 72000,
+          "world": 74000,
           "producers": [
             [
-              "US",
-              670
+              "AE",
+              2700
             ],
             [
               "AU",
@@ -215,7 +219,7 @@
             ],
             [
               "BR",
-              1100
+              1200
             ],
             [
               "CA",
@@ -223,19 +227,19 @@
             ],
             [
               "CN",
-              43000
-            ],
-            [
-              "IS",
-              780
+              45000
             ],
             [
               "IN",
               4200
             ],
             [
+              "IS",
+              750
+            ],
+            [
               "MY",
-              870
+              1100
             ],
             [
               "NO",
@@ -243,19 +247,21 @@
             ],
             [
               "RU",
-              3800
+              3900
             ],
             [
-              "AE",
-              2700
+              "US",
+              660
             ]
           ],
-          "other": 6800,
+          "other": 7000,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-aluminum.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-aluminum.pdf",
+            "edition": "MCS 2026",
             "table": "World Smelter Production"
           },
-          "label": "Smelted"
+          "label": "Smelted",
+          "year": 2025
         }
       ]
     },
@@ -276,7 +282,7 @@
           "lead ore",
           "zinc ore"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bismuth.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bismuth.pdf",
         "note": "Mostly a by-product of lead ore. In China and Vietnam, also of tungsten ore."
       },
       "rows": [
@@ -287,39 +293,41 @@
           "world": 16000,
           "producers": [
             [
-              "BO",
-              70
-            ],
-            [
               "BG",
               50
             ],
             [
+              "BO",
+              50
+            ],
+            [
               "CN",
-              13000
+              14000
             ],
             [
               "JP",
               500
             ],
             [
-              "KZ",
-              180
-            ],
-            [
               "KR",
               1000
             ],
             [
+              "KZ",
+              180
+            ],
+            [
               "LA",
-              1100
+              500
             ]
           ],
           "other": null,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bismuth.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bismuth.pdf",
+            "edition": "MCS 2026",
             "table": "World Refinery Production"
-          }
+          },
+          "year": 2025
         }
       ],
       "gap": {
@@ -343,47 +351,48 @@
         "alsoFrom": [
           "brine"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-boron.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-boron.pdf",
         "note": "Each country reports a different form, from crude ore to refined borates, so the figures can't be turned into shares."
       },
       "rows": [],
       "blank": "USGS reports each country's boron in a different form, so the numbers can't be added up and there is no world total.",
       "source": {
-        "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-boron.pdf",
-        "table": "World Production"
+        "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-boron.pdf",
+        "table": "World Production",
+        "edition": "MCS 2026"
       },
       "reported": {
         "unit": "kt",
-        "year": 2024,
+        "year": 2025,
         "rows": [
           [
             "TR",
-            3000,
+            1500,
             "refined borates"
           ],
           [
+            "BO",
+            380,
+            "ulexite"
+          ],
+          [
             "CL",
-            420,
+            300,
             "ulexite"
           ],
           [
             "CN",
-            340,
+            230,
             "boric oxide equivalent"
           ],
           [
             "PE",
-            300,
+            220,
             "crude borates"
           ],
           [
-            "BO",
-            230,
-            "ulexite"
-          ],
-          [
             "AR",
-            160,
+            170,
             "crude ore"
           ],
           [
@@ -417,7 +426,7 @@
         ],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cobalt.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf",
         "note": "Most known cobalt sits in copper deposits (DR Congo, Zambia) and in nickel deposits."
       },
       "rows": [
@@ -425,39 +434,35 @@
           "stage": "mined",
           "what": "Cobalt in ore",
           "unit": "t",
-          "world": 290000,
+          "world": 310000,
           "producers": [
             [
-              "US",
-              300
-            ],
-            [
               "AU",
-              3600
+              3700
             ],
             [
               "CA",
-              4500
-            ],
-            [
-              "CD",
-              220000
-            ],
-            [
-              "CU",
               3500
             ],
             [
+              "CD",
+              230000
+            ],
+            [
+              "CN",
+              2000
+            ],
+            [
+              "CU",
+              2000
+            ],
+            [
               "ID",
-              28000
+              44000
             ],
             [
               "MG",
-              2600
-            ],
-            [
-              "NC",
-              1500
+              3900
             ],
             [
               "PG",
@@ -465,22 +470,28 @@
             ],
             [
               "PH",
-              3800
+              3700
             ],
             [
               "RU",
-              8700
+              7700
             ],
             [
               "TR",
-              2700
+              1900
+            ],
+            [
+              "US",
+              300
             ]
           ],
-          "other": 6200,
+          "other": 9100,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cobalt.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -494,7 +505,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-copper.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf",
         "note": null
       },
       "rows": [
@@ -505,16 +516,16 @@
           "world": 23000,
           "producers": [
             [
-              "US",
-              1100
-            ],
-            [
               "AU",
-              800
+              730
             ],
             [
               "CA",
-              450
+              500
+            ],
+            [
+              "CD",
+              3200
             ],
             [
               "CL",
@@ -525,28 +536,24 @@
               1800
             ],
             [
-              "CD",
-              3300
+              "ID",
+              710
             ],
             [
               "IN",
-              30
-            ],
-            [
-              "ID",
-              1100
+              23
             ],
             [
               "KZ",
-              740
+              710
             ],
             [
               "MX",
-              700
+              690
             ],
             [
               "PE",
-              2600
+              2700
             ],
             [
               "PL",
@@ -554,29 +561,31 @@
             ],
             [
               "RU",
-              930
+              1300
+            ],
+            [
+              "US",
+              1000
             ],
             [
               "ZM",
-              680
+              940
             ]
           ],
-          "other": 2700,
+          "other": 3000,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-copper.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         },
         {
           "stage": "refined",
           "what": "Refined copper",
           "unit": "kt",
-          "world": 27000,
+          "world": 29000,
           "producers": [
-            [
-              "US",
-              890
-            ],
             [
               "AU",
               460
@@ -586,67 +595,73 @@
               320
             ],
             [
+              "CD",
+              2800
+            ],
+            [
               "CL",
-              1900
+              1700
             ],
             [
               "CN",
-              12000
-            ],
-            [
-              "CD",
-              2500
+              14000
             ],
             [
               "DE",
-              630
-            ],
-            [
-              "IN",
-              510
+              610
             ],
             [
               "ID",
-              350
+              400
             ],
             [
-              "JP",
-              1600
-            ],
-            [
-              "KZ",
-              470
-            ],
-            [
-              "KR",
+              "IN",
               620
             ],
             [
+              "JP",
+              1400
+            ],
+            [
+              "KR",
+              610
+            ],
+            [
+              "KZ",
+              500
+            ],
+            [
               "MX",
-              350
+              480
             ],
             [
               "PE",
-              390
+              340
             ],
             [
               "PL",
-              590
+              560
             ],
             [
               "RU",
-              960
+              950
+            ],
+            [
+              "US",
+              850
             ],
             [
               "ZM",
-              170
+              270
             ]
           ],
-          "other": 2500,
+          "other": 2100,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-copper.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf",
+            "edition": "MCS 2026",
             "table": "World Refinery Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -666,7 +681,7 @@
         "alsoFrom": [
           "zinc ore"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gallium.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf",
         "note": "Never mined for itself. Most is recovered while refining bauxite into alumina, the rest from zinc residues."
       },
       "rows": [
@@ -675,15 +690,15 @@
           "label": "Comes out of",
           "what": "Alumina refining",
           "unit": "kt",
-          "world": 142000,
+          "world": 150000,
           "producers": [
             [
-              "US",
-              720
+              "AE",
+              2300
             ],
             [
               "AU",
-              18000
+              17000
             ],
             [
               "BR",
@@ -695,31 +710,35 @@
             ],
             [
               "CN",
-              84000
+              93000
             ],
             [
               "DE",
-              960
+              460
             ],
             [
-              "GR",
-              860
+              "ES",
+              810
             ],
             [
               "GN",
-              300
+              360
             ],
             [
-              "IN",
-              7600
+              "GR",
+              850
             ],
             [
               "ID",
-              1300
+              1500
             ],
             [
               "IE",
-              1600
+              1700
+            ],
+            [
+              "IN",
+              8200
             ],
             [
               "JM",
@@ -727,7 +746,7 @@
             ],
             [
               "KZ",
-              1400
+              1500
             ],
             [
               "RU",
@@ -735,48 +754,42 @@
             ],
             [
               "SA",
-              1800
-            ],
-            [
-              "ES",
-              820
+              1900
             ],
             [
               "TR",
-              320
+              310
             ],
             [
-              "AE",
-              2400
+              "US",
+              710
             ],
             [
               "VN",
               1500
             ]
           ],
-          "other": 1500,
+          "other": 1300,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bauxite-alumina.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bauxite-alumina.pdf",
+            "edition": "MCS 2026",
             "table": "World Alumina Refinery Production"
           },
-          "note": "Gallium is not mined. Most is recovered while refining bauxite into alumina."
+          "note": "Gallium is not mined. Most is recovered while refining bauxite into alumina.",
+          "year": 2025
         },
         {
           "stage": "refined",
           "what": "Primary gallium",
           "unit": "kg",
-          "world": 760000,
+          "world": 900000,
           "producers": [
             [
               "CN",
-              750000
+              900000
             ],
             [
               "JP",
-              3000
-            ],
-            [
-              "KR",
               3000
             ],
             [
@@ -786,9 +799,11 @@
           ],
           "other": null,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gallium.pdf",
-            "table": "World Primary Production (low-purity)"
-          }
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf",
+            "edition": "MCS 2026",
+            "table": "World Low-Purity Production"
+          },
+          "year": 2025
         }
       ]
     },
@@ -807,14 +822,15 @@
           "zinc ore",
           "lignite coal"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
         "note": "Recovered from zinc ores. Also found in some coal."
       },
       "rows": [],
       "blank": "USGS publishes no output figures by country for germanium.",
       "source": {
-        "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf",
-        "table": "World Refinery Production"
+        "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+        "table": "World Refinery Production",
+        "edition": "MCS 2026"
       }
     },
     {
@@ -832,7 +848,7 @@
           "brine",
           "claystone"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-lithium.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf",
         "note": null
       },
       "rows": [
@@ -840,55 +856,57 @@
           "stage": "mined",
           "what": "Lithium in ore and brine",
           "unit": "t",
-          "world": 240000,
+          "world": 290000,
           "producers": [
             [
-              "US",
-              null
-            ],
-            [
               "AR",
-              18000
+              23000
             ],
             [
               "AU",
-              88000
+              92000
             ],
             [
               "BR",
-              10000
+              12000
             ],
             [
               "CA",
-              4300
+              5600
             ],
             [
               "CL",
-              49000
+              56000
             ],
             [
               "CN",
-              41000
+              62000
             ],
             [
-              "NA",
-              2700
+              "ML",
+              9400
             ],
             [
               "PT",
               380
             ],
             [
+              "US",
+              null
+            ],
+            [
               "ZW",
-              22000
+              28000
             ]
           ],
           "other": null,
           "note": "All lithium mined. The Act lists battery grade.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-lithium.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -906,7 +924,7 @@
         "alsoFrom": [
           "brine"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-magnesium-metal.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf",
         "note": null
       },
       "rows": [
@@ -914,7 +932,7 @@
           "stage": "refined",
           "what": "Magnesium metal",
           "unit": "kt",
-          "world": 1000,
+          "world": 1100,
           "producers": [
             [
               "BR",
@@ -925,20 +943,20 @@
               950
             ],
             [
-              "IR",
-              5
-            ],
-            [
               "IL",
               20
             ],
             [
+              "IR",
+              5
+            ],
+            [
               "KZ",
-              20
+              13
             ],
             [
               "RU",
-              15
+              60
             ],
             [
               "TR",
@@ -947,9 +965,11 @@
           ],
           "other": null,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-magnesium-metal.pdf",
-            "table": "World Primary Production"
-          }
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf",
+            "edition": "MCS 2026",
+            "table": "World Smelter Production"
+          },
+          "year": 2025
         }
       ],
       "gap": {
@@ -966,7 +986,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-manganese.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-manganese.pdf",
         "note": null
       },
       "rows": [
@@ -978,47 +998,45 @@
           "producers": [
             [
               "AU",
-              2800
+              1600
             ],
             [
               "BR",
-              590
-            ],
-            [
-              "CN",
-              770
-            ],
-            [
-              "CI",
-              360
-            ],
-            [
-              "GA",
-              4600
-            ],
-            [
-              "GH",
-              820
-            ],
-            [
-              "IN",
               800
             ],
             [
-              "MY",
-              410
+              "CI",
+              350
+            ],
+            [
+              "CN",
+              700
+            ],
+            [
+              "GA",
+              5000
+            ],
+            [
+              "GH",
+              2000
+            ],
+            [
+              "IN",
+              790
             ],
             [
               "ZA",
-              7400
+              7600
             ]
           ],
           "other": 1300,
           "note": "All manganese mined. The Act lists battery grade.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-manganese.pdf",
-            "table": "World Mine Production"
-          }
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-manganese.pdf",
+            "edition": "MCS 2026",
+            "table": "World Mine Production (manganese content)"
+          },
+          "year": 2025
         }
       ]
     },
@@ -1035,7 +1053,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-graphite.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-graphite.pdf",
         "note": null
       },
       "rows": [
@@ -1043,87 +1061,89 @@
           "stage": "mined",
           "what": "Natural graphite",
           "unit": "t",
-          "world": 1600000,
+          "world": 1800000,
           "producers": [
             [
               "AT",
-              500
+              200
             ],
             [
               "BR",
-              68000
+              65000
             ],
             [
               "CA",
-              20000
+              8000
             ],
             [
               "CN",
-              1270000
+              1400000
             ],
             [
               "DE",
-              170
+              140
             ],
             [
               "IN",
-              27800
+              17000
             ],
             [
               "KP",
-              8100
+              8000
             ],
             [
               "KR",
-              9600
-            ],
-            [
-              "MG",
-              89000
-            ],
-            [
-              "MX",
-              900
-            ],
-            [
-              "MZ",
-              75000
-            ],
-            [
-              "NO",
-              7000
-            ],
-            [
-              "RU",
-              20000
+              500
             ],
             [
               "LK",
-              3300
+              3200
             ],
             [
-              "TZ",
+              "MG",
+              80000
+            ],
+            [
+              "MX",
+              740
+            ],
+            [
+              "MZ",
+              60000
+            ],
+            [
+              "NO",
+              6600
+            ],
+            [
+              "RU",
               25000
             ],
             [
               "TR",
-              3100
+              2200
+            ],
+            [
+              "TZ",
+              75000
             ],
             [
               "UA",
-              1200
+              800
             ],
             [
               "VN",
-              2000
+              500
             ]
           ],
           "other": null,
           "note": "All natural graphite mined. The Act lists battery grade.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-graphite.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-graphite.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -1140,7 +1160,7 @@
           "laterite",
           "sulfide ore"
         ],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-nickel.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf",
         "note": null
       },
       "rows": [
@@ -1148,23 +1168,19 @@
           "stage": "mined",
           "what": "Nickel in ore",
           "unit": "t",
-          "world": 3700000,
+          "world": 3900000,
           "producers": [
             [
-              "US",
-              8000
-            ],
-            [
               "AU",
-              110000
+              45000
             ],
             [
               "BR",
-              77000
+              70000
             ],
             [
               "CA",
-              190000
+              140000
             ],
             [
               "CN",
@@ -1172,27 +1188,33 @@
             ],
             [
               "ID",
-              2200000
+              2600000
             ],
             [
               "NC",
-              110000
+              140000
             ],
             [
               "PH",
-              330000
+              270000
             ],
             [
               "RU",
-              210000
+              200000
+            ],
+            [
+              "US",
+              10000
             ]
           ],
-          "other": 300000,
+          "other": 290000,
           "note": "All nickel mined. The Act lists battery grade.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-nickel.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -1206,7 +1228,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-platinum-group.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-platinum-group.pdf",
         "note": "Platinum, palladium and four rarer metals (rhodium, ruthenium, iridium, osmium) that come out of the same ore. The figures cover platinum and palladium."
       },
       "rows": [
@@ -1217,32 +1239,34 @@
           "world": 360000,
           "producers": [
             [
-              "US",
-              10000
-            ],
-            [
               "CA",
-              20200
+              21000
             ],
             [
               "RU",
-              93000
+              104000
+            ],
+            [
+              "US",
+              8000
             ],
             [
               "ZA",
-              192000
+              190000
             ],
             [
               "ZW",
-              34000
+              33000
             ]
           ],
-          "other": 8800,
+          "other": 6800,
           "note": "Palladium and platinum added together.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-platinum-group.pdf",
-            "table": "World Mine Production"
-          }
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-platinum-group.pdf",
+            "edition": "MCS 2026",
+            "table": "World Mine Production (palladium + platinum)"
+          },
+          "year": 2025
         }
       ]
     },
@@ -1260,7 +1284,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf",
         "note": null
       },
       "rows": [
@@ -1271,20 +1295,12 @@
           "world": 390000,
           "producers": [
             [
-              "US",
-              45000
-            ],
-            [
               "AU",
-              13000
+              29000
             ],
             [
               "BR",
-              20
-            ],
-            [
-              "MM",
-              31000
+              2000
             ],
             [
               "CN",
@@ -1296,35 +1312,45 @@
             ],
             [
               "MG",
-              2000
+              2700
+            ],
+            [
+              "MM",
+              22000
             ],
             [
               "MY",
-              130
+              110
             ],
             [
               "NG",
-              13000
+              1500
             ],
             [
               "RU",
-              2500
+              2600
             ],
             [
               "TH",
-              13000
+              4800
+            ],
+            [
+              "US",
+              51000
             ],
             [
               "VN",
-              300
+              150
             ]
           ],
-          "other": 1100,
+          "other": 550,
           "note": "All rare earths mined. The Act lists the magnet ones.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -1340,7 +1366,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf",
         "note": null
       },
       "rows": [
@@ -1351,36 +1377,36 @@
           "world": 4600,
           "producers": [
             [
-              "US",
-              null
-            ],
-            [
               "AU",
-              40
+              47
             ],
             [
               "BR",
-              190
+              180
             ],
             [
               "CA",
-              30
+              34
             ],
             [
               "CN",
-              3900
-            ],
-            [
-              "FR",
-              90
+              4000
             ],
             [
               "DE",
-              60
+              13
+            ],
+            [
+              "ES",
+              4
+            ],
+            [
+              "FR",
+              68
             ],
             [
               "IS",
-              20
+              16
             ],
             [
               "KZ",
@@ -1388,26 +1414,28 @@
             ],
             [
               "NO",
-              120
+              130
             ],
             [
               "RU",
-              50
+              35
+            ],
+            [
+              "US",
+              null
             ],
             [
               "ZA",
               10
-            ],
-            [
-              "ES",
-              5
             ]
           ],
-          "other": 78,
+          "other": 46,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf",
-            "table": "World Production, silicon metal"
-          }
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf",
+            "edition": "MCS 2026",
+            "table": "World Production (silicon metal)"
+          },
+          "year": 2025
         }
       ],
       "gap": {
@@ -1427,7 +1455,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-titanium-minerals.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-titanium-minerals.pdf",
         "note": null
       },
       "rows": [
@@ -1435,81 +1463,75 @@
           "stage": "mined",
           "what": "Ilmenite and rutile",
           "unit": "kt",
-          "world": 9400,
+          "world": 9800,
           "producers": [
+            [
+              "AU",
+              980
+            ],
+            [
+              "CA",
+              360
+            ],
+            [
+              "CN",
+              3200
+            ],
+            [
+              "IN",
+              253
+            ],
+            [
+              "MG",
+              300
+            ],
+            [
+              "MZ",
+              1910
+            ],
+            [
+              "NO",
+              390
+            ],
+            [
+              "SL",
+              110
+            ],
+            [
+              "SN",
+              370
+            ],
+            [
+              "UA",
+              210
+            ],
             [
               "US",
               100
             ],
             [
-              "AU",
-              600
-            ],
-            [
-              "CA",
-              350
-            ],
-            [
-              "CN",
-              3300
-            ],
-            [
-              "IN",
-              222
-            ],
-            [
-              "KE",
-              40
-            ],
-            [
-              "MG",
-              240
-            ],
-            [
-              "MZ",
-              1908
-            ],
-            [
-              "NO",
-              360
-            ],
-            [
-              "SN",
-              300
-            ],
-            [
-              "SL",
-              60
-            ],
-            [
               "ZA",
               1400
-            ],
-            [
-              "UA",
-              130
             ]
           ],
-          "other": 350,
-          "note": "Weight of ore concentrate. Demand comes mainly from white pigment for paint, paper and plastics, not metal.",
+          "other": 239,
+          "note": "Counted as titanium dioxide content, not the gross weight of ore concentrate shipped. Demand comes mainly from white pigment for paint, paper and plastics, not metal.",
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-titanium-minerals.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-titanium-minerals.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production (ilmenite and rutile)"
-          }
+          },
+          "year": 2025
         },
         {
           "stage": "refined",
           "what": "Titanium sponge",
           "unit": "t",
-          "world": 320000,
+          "world": 370000,
           "producers": [
             [
-              "US",
-              null
-            ],
-            [
               "CN",
-              220000
+              260000
             ],
             [
               "IN",
@@ -1517,26 +1539,28 @@
             ],
             [
               "JP",
-              55000
+              53000
             ],
             [
               "KZ",
-              14000
+              16000
             ],
             [
               "RU",
-              20000
+              25000
             ],
             [
               "SA",
-              15000
+              12000
             ]
           ],
           "other": null,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-titanium.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-titanium.pdf",
+            "edition": "MCS 2026",
             "table": "World Sponge Metal Production"
-          }
+          },
+          "year": 2025
         }
       ]
     },
@@ -1550,7 +1574,7 @@
         "hosts": [],
         "hostElements": [],
         "alsoFrom": [],
-        "source": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-tungsten.pdf",
+        "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tungsten.pdf",
         "note": null
       },
       "rows": [
@@ -1558,31 +1582,39 @@
           "stage": "mined",
           "what": "Tungsten in ore",
           "unit": "t",
-          "world": 81000,
+          "world": 85000,
           "producers": [
+            [
+              "AT",
+              840
+            ],
             [
               "AU",
               1000
             ],
             [
-              "AT",
-              800
-            ],
-            [
               "BO",
-              1600
+              1700
             ],
             [
               "CN",
               67000
             ],
             [
+              "ES",
+              800
+            ],
+            [
               "KP",
-              1700
+              2000
+            ],
+            [
+              "KZ",
+              2400
             ],
             [
               "PT",
-              500
+              700
             ],
             [
               "RU",
@@ -1590,22 +1622,20 @@
             ],
             [
               "RW",
-              1200
-            ],
-            [
-              "ES",
-              700
+              1300
             ],
             [
               "VN",
-              3400
+              3000
             ]
           ],
-          "other": 1500,
+          "other": 2400,
           "source": {
-            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-tungsten.pdf",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tungsten.pdf",
+            "edition": "MCS 2026",
             "table": "World Mine Production"
-          }
+          },
+          "year": 2025
         }
       ]
     }
